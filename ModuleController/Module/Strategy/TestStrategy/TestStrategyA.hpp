@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <utility> /* std::pair */
+#include <gmpxx.h>
 
 class TestStrategyA : public Strategy
 {
@@ -13,7 +15,7 @@ public:
   TestStrategyA();
 
   virtual ~TestStrategyA() {}
-  virtual double execute( std::string aCompany, boost::gregorian::date aDate );
+  virtual std::pair<mpz_class, mpf_class> execute( std::string aCompany, boost::posix_time::ptime aDate );
 };
 
 #endif
