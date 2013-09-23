@@ -9,6 +9,9 @@ class Strategy
 public:
   virtual ~Strategy() {}
   virtual double execute( std::string companyName, boost::gregorian::date currDate ) = 0;
+
+  // TODO
+  /* Add access methods to the Database */
 };
 
 #endif
