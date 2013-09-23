@@ -1,4 +1,5 @@
 #include "NewModuleEvent.hpp"
+#include "../../../ModuleController/Module/CurrencyDisplay/CurrencyDisplay.hpp"
 
 NewModuleEvent::NewModuleEvent(
 			       unsigned int moduleid,
@@ -17,9 +18,8 @@ NewModuleEvent::NewModuleEvent(
 
 const char * NewModuleEvent::what() const throw()
 {
-  mp_exp_t exp = 12;
   std::string retStr = boost::posix_time::to_simple_string( _timestamp );
-  retStr += " : New Module Event : " + _name + " => $" + _initialworth.get_str(exp);
+  retStr += " : New Module Event : " + _name + " => " + CurrencyDisplay( _initialworth ).toString();
 
   for( auto it = std::begin( _initialholdings ); it != std::end( _initialholdings ); ++it )
     {

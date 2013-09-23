@@ -6,24 +6,27 @@
 #include "./Event/BuyEvent.hpp"
 #include "./Event/SellEvent.hpp"
 #include "./Event/NewModuleEvent.hpp"
+#include "../../ModuleController/Module/Module.hpp"
+#include "../../ModuleController/Module/Strategy/TestStrategy/TestStrategyA.hpp"
 
 int main( int argc, char ** argv )
 {
-  NewModuleEvent * moduleEvent;
-  BuyEvent * buyEvent;
-  SellEvent * sellEvent;
-  std::unordered_map<std::string, int> initialholdings;
+  Module * module = new Module(1);
+  std::unordered_map<std::string, mpz_class> initialholdings;
+  boost::posix_time::ptime atime;
+  std::string companyA = "GOOGL";
+  std::string companyB = "YHOO";
+  std::string companyC = "MSFT";
+
+  Ledger * ledger = new Ledger(*module);
+  module->sendEvent( new NewModuleEvent( 1, std::string( "module name" ), mpf_class( 10000 ), initialholdings ) );
+
+  module->loadStrategy( new TestStrategyA );
+  module->run(companyA, atime);
+  module->run(companyB, atime);
+  module->run(companyC, atime);
 
 
-  moduleEvent = new NewModuleEvent( "module name", 10000, initialholdings );
-  buyEvent = new BuyEvent( "GOOGL", 100, 20 );
-  sellEvent = new SellEvent( "GOOGL", 50, 34 );
-
-  Ledger * ledger = new Ledger( moduleEvent );
-  ledger->record( buyEvent );
-  ledger->record( sellEvent );
-
-
-  ledger->print( std::cout );
+  ledger->print();
   return 0;
 }

@@ -5,21 +5,26 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include "../../ModuleController/Module/Module.hpp"
+#include <boost/signals2/connection.hpp>
+#include <boost/bind.hpp>
 
 class Ledger
 {
 public:
-  Ledger();
+  Ledger( Module& module );
   virtual ~Ledger();
 
   void record( Event* event );
+  void print();
+  void setLogFile( std::string& logfile );
 private:
-  void print( std::ostream & os );
+  void printToStream( std::ostream& os );
 
   unsigned int _moduleid;
-  std::string _name;
-  vector<Event*> _eventlist;
+  std::vector<Event*> _eventlist;
   std::ofstream _logfile;
+  boost::signals2::connection _connection;
 };
 
 #endif
