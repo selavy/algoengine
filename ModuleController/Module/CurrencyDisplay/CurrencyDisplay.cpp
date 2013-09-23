@@ -19,7 +19,7 @@ std::string CurrencyDisplay::toString() const
 
   if( exp == 0 )
     {
-      retString = "$" + std::to_string( significant ) + ".00";
+      retString = "$" + significant + ".00";
       return retString;
     }
   else if( exp < 0 )
@@ -45,7 +45,7 @@ std::string CurrencyDisplay::toString() const
     }
   else /* exp > 0 ) */
     {
-      retString = "$" + std::to_string( significant );
+      retString = "$" + significant;
       for( int i = 0; i < exp; ++i )
 	retString += "0";
 
